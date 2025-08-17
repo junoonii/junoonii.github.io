@@ -22,10 +22,21 @@
       --shadow:0 10px 40px rgba(0,0,0,.55);
     }
 
+    /* 필터 버튼 박스 */
+    .filter-bar { display:flex; flex-wrap:wrap; gap:10px; margin:20px 0; justify-content:center; }
+    .filter-bar button {
+      background:#111; color:#fff; border:1px solid #333; padding:8px 14px;
+      border-radius:20px; cursor:pointer; transition:all .3s ease;
+    }
+    .filter-bar button:hover { background:#444; }
+    .filter-bar button.active { background:#fff; color:#000; font-weight:bold; }
+
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0; background:var(--bg); color:var(--ink);
-      font-family:'Space Grotesk',system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,Malgun Gothic,sans-serif; line-height:1.6}
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family:'Space Grotesk',system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,Malgun Gothic,sans-serif; line-height:1.6
+    }
     h1,h2,h3{font-family:"Archivo Black",system-ui,sans-serif; letter-spacing:.2px}
     a{color:inherit;text-decoration:none}
     img{display:block;max-width:100%;height:auto;border-radius:12px}
@@ -42,8 +53,6 @@
     .menu a:hover,.menu a.active{background:transparent;color:var(--brand);border-color:#262626}
     .actions{display:flex;gap:10px}
     .btn{padding:10px 14px;border-radius:12px;border:1px solid #262626;background:transparent;color:var(--ink)}
-    .btn.primary{border-color:var(--accent);background:var(--accent);color:#fff}
-    .btn.ghost{background:transparent;border-color:#262626}
     .btn.primary{border-color:#0ea5e9;background:linear-gradient(180deg,#38bdf8,#0ea5e9);color:#fff}
     .btn.ghost{background:transparent;border-color:var(--line)}
 
@@ -54,6 +63,7 @@
     h1.display{font-weight:400;line-height:1.02;font-size:clamp(36px,6vw,68px);margin:10px 0 12px;color:var(--brand)}
     .lead{color:#cccccc;max-width:640px}
     .hero .card{grid-column:span 12;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);transition:transform .18s ease, border-color .2s;position:relative;z-index:0}
+
     .card:hover{transform:translateY(-2px);border-color:#262626}
     .thumb{position:relative;overflow:hidden;border-radius:14px}
     .thumb img{transition:transform .25s ease}
@@ -62,7 +72,11 @@
     .thumb .shadow{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.45),transparent 40%)}
 
     /* Filters */
-    .controls{position:sticky;top:72px;z-index:1000;display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:26px 0;padding:10px 12px;background:rgba(10,10,10,.85);backdrop-filter:blur(8px);border:1px solid #161616;border-radius:12px;pointer-events:auto;isolation:isolate}
+    .controls{
+      position:sticky;top:72px;z-index:2000; /* 최상단 보장 */
+      display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:26px 0;padding:10px 12px;
+      background:rgba(10,10,10,.85);backdrop-filter:blur(8px);border:1px solid #161616;border-radius:12px;pointer-events:auto;isolation:isolate
+    }
     .pill{padding:8px 12px;border:1px solid #262626;border-radius:999px;color:#b5b5b5;background:#0e0e0e;cursor:pointer;pointer-events:auto}
     .pill.active{background:#111111;border-color:#363636;color:#ffffff}
     .search{flex:1;min-width:260px;display:flex;align-items:center;gap:10px;background:#0e0e0e;border:1px solid #262626;border-radius:10px;padding:10px 12px}
@@ -76,7 +90,6 @@
     .card[data-cat="bmw"]::before{background:#60a5fa}
     .card[data-cat="porsche"]::before{background:#facc15}
     .card[data-cat="motorsports"]::before{background:#22c55e}
-    .card:hover{transform:translateY(-2px)}
     .card-body{padding:16px}
     .meta{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px}
     .title{font-weight:800;font-size:22px;margin:6px 0 6px;color:var(--brand);letter-spacing:.2px}
@@ -85,22 +98,13 @@
     .chip{font-size:12px;border:1px solid var(--line);padding:4px 10px;border-radius:999px;background:var(--chip)}
     @media(min-width:760px){.card.span-6{grid-column:span 6}.card.span-4{grid-column:span 4}}
 
+    /* 카드 전체를 링크로 */
+    .card-link{display:block; color:inherit}
+    .card-link:focus-visible{outline:2px solid #38bdf8; outline-offset:2px; border-radius:14px; }
+
     /* Footer */
     footer{margin-top:40px;border-top:1px solid var(--line);padding:32px 0;color:var(--muted)}
     .foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-
-    /* --- 클릭 막힘 버그 고정 (필터를 최상단으로) --- */
-    #mainfilters, #subfilters, #seriesfilters {
-      position: relative;
-      z-index: 2000;
-      pointer-events: auto;
-    }
-    /* 히어로 카드가 클릭을 가로채지 않게 */
-    .hero .card,
-    .hero .thumb,
-    .hero .thumb .shadow {
-      pointer-events: none;
-    }
   </style>
 </head>
 <body>
@@ -127,9 +131,9 @@
     <section class="hero container">
       <div class="hero-grid">
         <div>
-          <div class="kicker">Racing · JDM · BMW · Porsche</div>
-          <h1 class="display">WE FEELING THE CARS.</h1>
-          <p class="lead">JDM의 원형, BMW의 밸런스, 포르쉐의 정밀. 미니멀한 지면에 본질만 남겼습니다.</p>
+          <div class="kicker"> JDM · BMW · Porsche</div>
+          <h1 class="display">WE FEEL THE CARS.</h1>
+          <p class="lead">JDM, BMW,PORSCHE. 미니멀한 지면에 본질만 남겼습니다.</p>
 
           <!-- MAIN FILTERS -->
           <div class="controls" id="mainfilters">
@@ -165,20 +169,22 @@
           </div>
         </div>
 
-        <!-- HERO CARD -->
-        <div class="card">
-          <div class="thumb">
-            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1400&auto=format&fit=crop" alt="Hero car" loading="lazy"/>
-            <div class="shadow"></div>
-            <span class="tag">Editorial</span>
-          </div>
-          <div class="card-body">
-            <div class="meta">Vol. 01 · 2025-08-17 · 5 min</div>
-            <div class="title">검은 차체, 붉은 포인트: 하이엔드 레이싱 무드</div>
-            <p class="excerpt">모노크롬 표면 위의 미세한 질감, 정밀한 스티어링, 그리고 완성도. 미니멀리즘으로 읽는 퍼포먼스.</p>
-            <div class="chips"><span class="chip">Editorial</span><span class="chip">Monochrome</span></div>
-          </div>
-        </div>
+        <!-- HERO CARD (클릭 → 상세 페이지) -->
+        <article class="card" data-cat="editorial">
+          <a class="card-link" href="detail.html?id=0" aria-label="검은 차체, 붉은 포인트: THE BEAST">
+            <div class="thumb">
+              <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1400&auto=format&fit=crop" alt="Hero car" loading="lazy"/>
+              <div class="shadow"></div>
+              <span class="tag">Editorial</span>
+            </div>
+            <div class="card-body">
+              <div class="meta">Vol. 01 · 2025-08-17 · 5 min</div>
+              <div class="title">검은 차체, 붉은 포인트: THE BEAST</div>
+              <p class="excerpt">모노크롬 표면 위의 미세한 질감, 정밀한 스티어링, 그리고 완성도. 미니멀리즘으로 읽는 퍼포먼스.</p>
+              <div class="chips"><span class="chip">Editorial</span><span class="chip">Monochrome</span></div>
+            </div>
+          </a>
+        </article>
       </div>
     </section>
 
@@ -221,55 +227,55 @@
       // E-Body
       {id:1001, cat:'bmw', series:'M1', body:'E', model:'M1 (E26)', mins:5, date:'2025-08-17', title:'M1 · 레이싱의 기원',
         excerpt:'E26 파이버글라스 바디와 미드십 직렬6. BMW M의 출발점.',
-        img:'https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1400&auto=format&fit=crop', chips:['E26','Midship','Classic']},
+        img:'https://i.pinimg.com/1200x/b4/7f/ab/b47fabb6770ee7bcdfc769dfdfee9062.jpg', chips:['E26','Midship','Classic']},
       {id:1002, cat:'bmw', series:'M3', body:'E', model:'M3 (E46)', mins:6, date:'2025-08-16', title:'E46 M3 · 레퍼런스의 기준',
         excerpt:'S54와 섀시 강성이 만든 시대의 표준. 지금도 통하는 셋업.',
-        img:'https://images.unsplash.com/photo-1518552718880-67b58f0b6b77?q=80&w=1400&auto=format&fit=crop', chips:['S54','Manual']},
+        img:'https://i.pinimg.com/736x/a2/96/3e/a2963eee6cb84160211912a6ded28f13.jpg', chips:['S54','Manual']},
       {id:1003, cat:'bmw', series:'M5', body:'E', model:'M5 (E39)', mins:6, date:'2025-08-15', title:'E39 M5 · V8의 균형감',
         excerpt:'자연흡기 V8과 샤시 밸런스. 그란 투리스모의 정석.',
-        img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1400&auto=format&fit=crop', chips:['V8','NA']},
+        img:'https://i.pinimg.com/1200x/76/f9/58/76f958c4b848397e4721a985b7a78ebe.jpg', chips:['V8','NA']},
       {id:1004, cat:'bmw', series:'M6', body:'E', model:'M6 (E63)', mins:5, date:'2025-08-14', title:'E63 M6 · 하이레브 V10의 서사',
         excerpt:'S85 V10과 GT 섀시의 공존. 사운드와 스루풋.',
-        img:'https://images.unsplash.com/photo-1549923746-c502d488b3ea?q=80&w=1400&auto=format&fit=crop', chips:['S85','GT']},
+        img:'https://i.pinimg.com/1200x/dd/dc/5d/dddc5dd35591f25b6ea171dd608ab3e8.jpg', chips:['S85','GT']},
 
       // F-Body
       {id:1011, cat:'bmw', series:'M2', body:'F', model:'M2 (F87)', mins:5, date:'2025-08-13', title:'F87 M2 · 컴팩트의 무게중심',
         excerpt:'짧은 휠베이스와 리어-드리븐. 펀-투-드라이브 기준점.',
-        img:'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1400&auto=format&fit=crop', chips:['F87','RWD']},
+        img:'https://i.pinimg.com/736x/cd/61/8f/cd618f0b06727aeda796c963871e2ef6.jpg', chips:['F87','RWD']},
       {id:1012, cat:'bmw', series:'M3', body:'F', model:'M3 (F80)', mins:6, date:'2025-08-12', title:'F80 M3 · 터보의 세팅',
         excerpt:'S55의 응답과 섀시 보정. 직선과 코너의 균형값.',
-        img:'https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1400&auto=format&fit=crop', chips:['S55','Turbo']},
+        img:'https://i.pinimg.com/1200x/66/25/71/6625710dc8b80710571847f8e3e89afe.jpg', chips:['S55','Turbo']},
       {id:1013, cat:'bmw', series:'M4', body:'F', model:'M4 (F82)', mins:5, date:'2025-08-11', title:'F82 M4 · 직선만이 답은 아니다',
         excerpt:'그립과 바디 컨트롤에서 오는 제한의 질감.',
-        img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1400&auto=format&fit=crop', chips:['F82']},
+        img:'https://i.pinimg.com/736x/e4/18/1b/e4181b43aa17946d7d8f79278d646f80.jpg', chips:['F82']},
       {id:1014, cat:'bmw', series:'M5', body:'F', model:'M5 (F10)', mins:6, date:'2025-08-10', title:'F10 M5 · 고속의 품격',
         excerpt:'S63과 하체 세팅의 조화. 장거리의 유연성.',
-        img:'https://images.unsplash.com/photo-1549923746-c502d488b3ea?q=80&w=1400&auto=format&fit=crop', chips:['S63','DCT']},
+        img:'https://i.pinimg.com/736x/70/a9/d1/70a9d15f22cb4e2497e850e5544400e5.jpg', chips:['S63','DCT']},
       {id:1015, cat:'bmw', series:'M6', body:'F', model:'M6 (F13)', mins:5, date:'2025-08-09', title:'F13 M6 · GT의 여백',
         excerpt:'쿠페의 롱 휠베이스와 트윈터보의 매칭.',
-        img:'https://images.unsplash.com/photo-1541348263662-e068662d82af?q=80&w=1400&auto=format&fit=crop', chips:['F13']},
+        img:'https://i.pinimg.com/1200x/af/84/52/af8452650989fd538742cdaa75dcb277.jpg', chips:['F13']},
       {id:1016, cat:'bmw', series:'M7', body:'F', model:'M7 (F01 기반 760Li 레퍼런스)', mins:4, date:'2025-08-08', title:'M7? · 플래그십의 가능성',
-        excerpt:'공식 M은 없지만, 대형 세단에 담긴 성향을 읽다.',
-        img:'https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1400&auto=format&fit=crop', chips:['Flagship']},
+        excerpt:'M760Li V12의 진한 매력. ',
+        img:'https://i.pinimg.com/1200x/dc/81/d5/dc81d575e84f0f967a4844713eb2499c.jpg', chips:['Flagship']},
 
       // G-Body
       {id:1021, cat:'bmw', series:'M2', body:'G', model:'M2 (G87)', mins:6, date:'2025-08-07', title:'G87 M2 · 리듬의 재정의',
         excerpt:'뉴트럴한 리어와 초기 응답. 드라이버 입력의 투명성.',
-        img:'https://images.unsplash.com/photo-1621135802920-133df287f89f?q=80&w=1400&auto=format&fit=crop', chips:['G87','S58']},
+        img:'https://i.pinimg.com/1200x/c1/17/77/c11777d2ba87996c0b5cd083bd8ffc25.jpg', chips:['G87','S58']},
       {id:1022, cat:'bmw', series:'M3', body:'G', model:'M3 (G80)', mins:6, date:'2025-08-06', title:'G80 M3 · 하이브리드 시대의 지점',
         excerpt:'섀시 강성과 전자제어. 일상성과 서킷의 경계.',
-        img:'https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1400&auto=format&fit=crop', chips:['G80']},
+        img:'https://i.pinimg.com/736x/19/b0/98/19b098a7b8ab0287d7231312b998c99a.jpg', chips:['G80']},
       {id:1023, cat:'bmw', series:'M4', body:'G', model:'M4 (G82)', mins:5, date:'2025-08-05', title:'G82 M4 · 다운포스의 읽기',
         excerpt:'프런트 엔드와 리어 트랙의 대화.',
-        img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1400&auto=format&fit=crop', chips:['G82']},
+        img:'https://i.pinimg.com/736x/3a/6c/ed/3a6ced9bcad0825c8951199f98784a88.jpg', chips:['G82']},
       {id:1024, cat:'bmw', series:'M5', body:'G', model:'M5 (G90)', mins:6, date:'2025-08-04', title:'G90 M5 · 차세대 GT',
         excerpt:'출력, 무게, 전동화 사이 밸런스 포인트.',
-        img:'https://images.unsplash.com/photo-1549923746-c502d488b3ea?q=80&w=1400&auto=format&fit=crop', chips:['G90']},
+        img:'https://i.pinimg.com/736x/e9/cf/2b/e9cf2b9f39861b80e8b1cdb7cd9b2883.jpg', chips:['G90']},
       {id:1025, cat:'bmw', series:'M7', body:'G', model:'M760i (G12) · 플래그십', mins:4, date:'2025-08-03', title:'G12 M760i · 대형의 속도',
         excerpt:'사운드와 정숙성의 양면. 장거리에서 드러나는 여유.',
-        img:'https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1400&auto=format&fit=crop', chips:['V12','xDrive']},
+        img:'https://i.pinimg.com/1200x/c1/93/95/c19395f7c4678e5f3e05becce0c8231b.jpg', chips:['V12','xDrive']},
 
-      // ---- 예시: Porsche/AMG/Ferrari 유지 ----
+      // ---- Porsche/AMG/Ferrari 예시 유지 ----
       {id:1101, cat:'porsche', gen:'992', model:'911 GT3 Touring (992)', mins:8, date:'2025-08-01', title:'992 GT3 Touring · 촉감의 스포츠',
         excerpt:'플랫식스의 호흡과 미드-하이 그립.',
         img:'https://images.unsplash.com/photo-1549923746-c502d488b3ea?q=80&w=1400&auto=format&fit=crop', chips:['992','NA']},
@@ -294,15 +300,23 @@
         el.setAttribute('data-cat', a.cat);
         const badge = catToFlag[a.cat] || '';
         const model = a.model ? `<div class="meta" style="margin-top:4px">${a.model}${a.body?` · ${a.body}`:''}${a.gen?` · ${a.gen}`:''}</div>` : '';
+
+        // 링크로 전체 카드 감싸기 (detail.html?id=...)
         el.innerHTML = `
-          <div class="thumb"><img src="${a.img}" alt="${a.title}" loading="lazy" style="filter:grayscale(20%)"><div class="shadow"></div><span class="tag">${a.cat}</span></div>
-          <div class="card-body">
-            <div class="meta">${fmtDate(a.date)} · ${a.mins} min</div>
-            <div class="title">${a.title} ${badge?`<span style='font-size:14px;opacity:.8'>${badge}</span>`:''}</div>
-            ${model}
-            <p class="excerpt">${a.excerpt}</p>
-            <div class="chips">${a.chips?a.chips.map(c=>`<span class="chip">${c}</span>`).join(''):''}</div>
-          </div>`;
+          <a class="card-link" href="detail.html?id=${a.id}" aria-label="${a.title}">
+            <div class="thumb">
+              <img src="${a.img}" alt="${a.title}" loading="lazy" style="filter:grayscale(20%)">
+              <div class="shadow"></div>
+              <span class="tag">${a.cat}</span>
+            </div>
+            <div class="card-body">
+              <div class="meta">${fmtDate(a.date)} · ${a.mins} min</div>
+              <div class="title">${a.title} ${badge?`<span style='font-size:14px;opacity:.8'>${badge}</span>`:''}</div>
+              ${model}
+              <p class="excerpt">${a.excerpt}</p>
+              <div class="chips">${a.chips?a.chips.map(c=>`<span class="chip">${c}</span>`).join(''):''}</div>
+            </div>
+          </a>`;
         $grid.appendChild(el);
       });
     }
@@ -322,9 +336,14 @@
 
     function apply(){
       const q = ($search.value||'').toLowerCase();
-      let list = DATA.filter(a => (current==='all' || a.cat===current) && (
-        a.title.toLowerCase().includes(q) || (a.excerpt||'').toLowerCase().includes(q) || (a.chips||[]).join(' ').toLowerCase().includes(q)
-      ));
+      let list = DATA.filter(a =>
+        (current==='all' || a.cat===current) && (
+          a.title.toLowerCase().includes(q) ||
+          (a.excerpt||'').toLowerCase().includes(q) ||
+          (a.chips||[]).join(' ').toLowerCase().includes(q) ||
+          (a.model||'').toLowerCase().includes(q)     // 검색 범위에 model 추가
+        )
+      );
       if(current==='bmw'){
         if(subBody!=='all')   list = list.filter(a => (a.body||'')   === subBody);
         if(subSeries!=='all') list = list.filter(a => (a.series||'') === subSeries);
@@ -389,26 +408,9 @@
     // 검색
     $search.addEventListener('input', apply);
 
-    // 단축키: J/B/P/M/A
-    document.addEventListener('keydown', (e)=>{
-      const key = e.key.toLowerCase();
-      const map = { j:'jdm', b:'bmw', p:'porsche', m:'motorsports', a:'all' };
-      if(!map[key]) return;
-      current = map[key];
-      $mainfilters.querySelectorAll('.pill[data-filter]').forEach(x=>x.classList.toggle('active', x.dataset.filter===current));
-      if(current==='bmw'){
-        $sub.style.display='flex';
-        $series.style.display='flex';
-      }else{
-        $sub.style.display='none';
-        $series.style.display='none';
-        subBody='all'; subSeries='all';
-      }
-      apply();
-    });
-
     // ------- UX -------
     document.getElementById('year').textContent = new Date().getFullYear();
+
     document.getElementById('subscribeBtn').addEventListener('click',()=>{
       const email = document.getElementById('email').value.trim();
       if(!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
@@ -424,6 +426,9 @@
       links.forEach(x=>x.classList.remove('active'));
       a.classList.add('active');
     }));
+
+    // ⛔ 키보드 단축키 제거됨
   </script>
 </body>
 </html>
+
