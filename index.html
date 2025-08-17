@@ -7,63 +7,85 @@
   <meta name="description" content="감도 있는 자동차 매거진 랜딩. 리뷰, 기술, 모터스포츠, 시장 트렌드까지." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;700;800&family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
   <style>
+    /* THEME — HIGH-END / RACING (All Black) */
     :root{
-      --bg:#0b0d12; --panel:#0f1220; --ink:#e6e9f0; --muted:#a3aec2; --line:#1d2233;
-      --brand:#7dd3fc; --brand2:#60a5fa; --accent:#eab308; --error:#ef4444;
-      --card:#0b1220; --glass:rgba(13,17,26,.55);
+      --bg:#0a0a0a;      /* 거의 순흑 */
+      --panel:#0e0e0e;   /* 카드 배경 */
+      --ink:#f5f5f5;     /* 본문 텍스트 */
+      --muted:#a3a3a3;   /* 보조 텍스트 */
+      --line:#1a1a1a;    /* 디바이더 */
+      --brand:#ffffff;   /* 제목/로고 */
+      --accent:#ef4444;  /* 레이싱 레드 */
+      --chip:#141414;    /* 태그 배경 */
+      --shadow:0 10px 40px rgba(0,0,0,.55);
     }
+
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0; background:
-      radial-gradient(1200px 600px at 110% -10%, rgba(96,165,250,.12), transparent 55%),
-      radial-gradient(900px 500px at -10% 110%, rgba(125,211,252,.10), transparent 60%),
-      var(--bg);
-      color:var(--ink); font-family:Pretendard,system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,Malgun Gothic,sans-serif; line-height:1.6}
+    body{margin:0; background:var(--bg); color:var(--ink);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,Malgun Gothic,sans-serif; line-height:1.6}
+    h1,h2,h3{font-family:"Archivo Black",system-ui,sans-serif; letter-spacing:.2px}
     a{color:inherit;text-decoration:none}
-    img{display:block;max-width:100%;height:auto;border-radius:14px}
+    img{display:block;max-width:100%;height:auto;border-radius:12px}
     .container{max-width:1180px;margin:0 auto;padding:0 20px}
 
     /* Header */
-    header{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--line);backdrop-filter:blur(10px);background:linear-gradient(0deg,rgba(11,13,18,.2),rgba(11,13,18,.6))}
-    .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+    header{position:sticky;top:0;z-index:50;border-bottom:1px solid var(--line);background:rgba(10,10,10,.8);backdrop-filter:blur(8px)}
+    [data-theme="dark"] header{background:linear-gradient(0deg,rgba(11,13,18,.25),rgba(11,13,18,.6))}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
     .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.4px}
-    .logo .mark{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--brand2),var(--brand));box-shadow:0 6px 18px rgba(96,165,250,.35)}
-    .menu{display:flex;gap:14px}
-    .menu a{padding:10px 12px;border-radius:10px;color:var(--muted)}
-    .menu a:hover,.menu a.active{background:rgba(96,165,250,.12);color:var(--ink)}
+    .logo .mark{width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,var(--accent),#7f1d1d);box-shadow:0 6px 18px rgba(239,68,68,.25)}
+    .menu{display:flex;gap:10px}
+    .menu a{padding:10px 12px;border-radius:10px;color:var(--muted);border:1px solid transparent}
+    .menu a:hover,.menu a.active{background:transparent;color:var(--brand);border-color:#262626}
+    .menu a:hover,.menu a.active{background:var(--chip);color:var(--brand)}
     .actions{display:flex;gap:10px}
-    .btn{padding:10px 14px;border-radius:12px;border:1px solid rgba(148,163,184,.18);background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));color:var(--ink)}
-    .btn.primary{border-color:transparent;background:linear-gradient(180deg,#3b82f6,#2563eb);color:#fff}
+    .btn{padding:10px 14px;border-radius:12px;border:1px solid #262626;background:transparent;color:var(--ink)}
+    .btn.primary{border-color:var(--accent);background:var(--accent);color:#fff}
+    .btn.ghost{background:transparent;border-color:#262626}
+    .btn.primary{border-color:#0ea5e9;background:linear-gradient(180deg,#38bdf8,#0ea5e9);color:#fff}
+    .btn.ghost{background:transparent;border-color:var(--line)}
 
     /* Hero */
-    .hero{padding:44px 0}
-    .hero-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:18px}
+    .hero{padding:56px 0}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
     .kicker{color:var(--muted);text-transform:uppercase;font-size:12px;letter-spacing:2px}
-    h1.display{font-family:"DM Serif Text",serif;font-weight:400;letter-spacing:.2px;line-height:1.08;font-size:clamp(32px,6vw,60px);margin:10px 0 12px}
-    .lead{color:#cdd6e6;max-width:640px}
-    .hero .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.18);border-radius:16px;padding:16px}
+    h1.display{font-weight:400;line-height:1.02;font-size:clamp(36px,6vw,68px);margin:10px 0 12px;color:var(--brand)}
+    .lead{color:#cccccc;max-width:640px}
+    .hero .card{grid-column:span 12;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);transition:transform .18s ease, border-color .2s}
+    .card:hover{transform:translateY(-2px);border-color:#262626}
+    .thumb{position:relative;overflow:hidden;border-radius:14px}
+    .thumb .tag{position:absolute;left:10px;top:10px;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);padding:6px 10px;border-radius:999px;border:1px solid #2a2a2a;font-size:12px;color:#fafafa}
+    .thumb .shadow{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.45),transparent 40%)}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+    .kicker{color:var(--muted);text-transform:uppercase;font-size:12px;letter-spacing:2px}
+    h1.display{font-weight:400;line-height:1.08;font-size:clamp(34px,6vw,64px);margin:10px 0 12px}
+    .lead{color:var(--muted);max-width:640px}
+    .hero .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
     .thumb{position:relative;overflow:hidden;border-radius:16px}
-    .thumb .tag{position:absolute;left:12px;top:12px;background:rgba(13,17,26,.6);backdrop-filter:blur(6px);padding:6px 10px;border-radius:999px;border:1px solid rgba(148,163,184,.25);font-size:12px;color:#dbe7ff}
-    .thumb .shadow{position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,13,18,.45),transparent 40%)}
+    .thumb .tag{position:absolute;left:12px;top:12px;background:rgba(255,255,255,.7);backdrop-filter:blur(6px);padding:6px 10px;border-radius:999px;border:1px solid var(--line);font-size:12px;color:#0b0d12}
+    [data-theme="dark"] .thumb .tag{background:rgba(13,17,26,.6);color:#e6e9f0;border-color:rgba(148,163,184,.25)}
+    .thumb .shadow{position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,13,18,.35),transparent 40%)}
 
     /* Filters */
     .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:26px 0}
-    .pill{padding:8px 12px;border:1px solid rgba(148,163,184,.22);border-radius:999px;color:var(--muted)}
-    .pill.active{background:rgba(96,165,250,.14);border-color:rgba(96,165,250,.35);color:#eaf3ff}
-    .search{flex:1;min-width:260px;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.04);border:1px solid rgba(148,163,184,.2);border-radius:12px;padding:10px 12px}
-    .search input{all:unset;flex:1;color:var(--ink)}
+    .pill{padding:8px 12px;border:1px solid #262626;border-radius:999px;color:#b5b5b5;background:#0e0e0e}
+    .pill.active{background:#111111;border-color:#363636;color:#ffffff}
+    .search{flex:1;min-width:260px;display:flex;align-items:center;gap:10px;background:#0e0e0e;border:1px solid #262626;border-radius:10px;padding:10px 12px}
+    .search input{all:unset;flex:1;color:#fff}
 
     /* Grid */
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
-    .card{grid-column:span 12;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.18);border-radius:16px;overflow:hidden}
+    .card{grid-column:span 12;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);transition:transform .18s ease}
+    .card:hover{transform:translateY(-2px)}
     .card-body{padding:16px}
     .meta{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px}
-    .title{font-weight:700;font-size:20px;margin:6px 0 6px}
-    .excerpt{color:#c6d0e3}
+    .title{font-weight:800;font-size:22px;margin:6px 0 6px;color:var(--brand);letter-spacing:.2px}
+    .excerpt{color:var(--muted)}
     .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-    .chip{font-size:12px;border:1px solid rgba(148,163,184,.25);padding:4px 10px;border-radius:999px;color:#cfe0ff}
+    .chip{font-size:12px;border:1px solid var(--line);padding:4px 10px;border-radius:999px;background:var(--chip)}
     @media(min-width:760px){.card.span-6{grid-column:span 6}.card.span-4{grid-column:span 4}}
 
     /* Footer */
@@ -95,15 +117,15 @@
     <section class="hero container">
       <div class="hero-grid">
         <div>
-          <div class="kicker">Car Culture · Weekly</div>
-          <h1 class="display">빠르게 스쳐가는 뉴스를 넘어, <em>감도</em>로 읽는 자동차.</h1>
-          <p class="lead">리뷰 · 기술 · 모터스포츠 · 시장 동향을 한곳에서. 에디토리얼 큐레이션으로 만들어진 주간 매거진 <strong>SHIFT</strong>.</p>
+          <div class="kicker">Racing · JDM · BMW · Porsche</div>
+          <h1 class="display">하이엔드 에디토리얼. 속도의 미학을 기록한다.</h1>
+          <p class="lead">JDM의 원형, BMW의 밸런스, 포르쉐의 정밀. 미니멀한 지면에 본질만 남겼습니다.</p>
           <div class="controls">
             <div class="pill active" data-filter="all">전체</div>
-            <div class="pill" data-filter="reviews">리뷰</div>
-            <div class="pill" data-filter="tech">테크</div>
-            <div class="pill" data-filter="motorsports">모터스포츠</div>
-            <div class="pill" data-filter="market">마켓</div>
+            <div class="pill" data-filter="jdm">JDM</div>
+            <div class="pill" data-filter="bmw">BMW</div>
+            <div class="pill" data-filter="porsche">Porsche</div>
+            <div class="pill" data-filter="motorsports">Motorsports</div>
             <label class="search" aria-label="검색">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-3.5-3.5" stroke="#93a0b8" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="7" stroke="#93a0b8" stroke-width="2"/></svg>
               <input id="search" type="text" placeholder="모델, 브랜드, 키워드 검색" />
@@ -112,15 +134,15 @@
         </div>
         <div class="card">
           <div class="thumb">
-            <img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?q=80&w=1600&auto=format&fit=crop" alt="Hero car" loading="lazy"/>
+            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop" alt="Hero car" loading="lazy"/>
             <div class="shadow"></div>
-            <span class="tag">에디토리얼</span>
+            <span class="tag">Editorial</span>
           </div>
           <div class="card-body">
-            <div class="meta">Vol. 01 · 2025-08-17 · 7 min</div>
-            <div class="title">전기차가 ‘지루해졌다’는 말, 정말일까?</div>
-            <p class="excerpt">스펙 경쟁의 끝에서 달리 보이는 것들. 감성, 주행 질감, 그리고 브랜딩의 재발견.</p>
-            <div class="chips"><span class="chip">에세이</span><span class="chip">EV</span></div>
+            <div class="meta">Vol. 01 · 2025-08-17 · 5 min</div>
+            <div class="title">검은 차체, 붉은 포인트: 하이엔드 레이싱 무드</div>
+            <p class="excerpt">모노크롬 표면 위의 미세한 질감, 정밀한 스티어링, 그리고 완성도. 미니멀리즘으로 읽는 퍼포먼스.</p>
+            <div class="chips"><span class="chip">Editorial</span><span class="chip">Monochrome</span></div>
           </div>
         </div>
       </div>
@@ -161,38 +183,34 @@
   <script>
     // ------- DATA (샘플 기사) -------
     const DATA = [
-      {id:1, cat:'reviews', mins:8, date:'2025-08-11', title:'GR86의 마지막 순수성',
-        excerpt:'가벼움과 기계식 감각이 주는 쾌감. 숫자보다 손끝으로 느끼는 밸런스.',
-        img:'https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=1600&auto=format&fit=crop',
-        chips:['RWD','NA','Driver’s Car']},
-      {id:2, cat:'tech', mins:6, date:'2025-08-09', title:'소프트웨어 정의 자동차의 현재',
-        excerpt:'OTA, 영역제어기, 서비스형 기능(Features-as-a-Service)까지 핵심만 빠르게.',
-        img:'https://images.unsplash.com/photo-1552581234-26160f608093?q=80&w=1600&auto=format&fit=crop',
-        chips:['SDV','OTA']},
-      {id:3, cat:'motorsports', mins:5, date:'2025-08-07', title:'DTM, 투어링의 본질을 묻다',
-        excerpt:'BoP와 고객 레이싱의 균형, 그리고 팬 경험의 변화.',
-        img:'https://images.unsplash.com/photo-1518552718880-67b58f0b6b77?q=80&w=1600&auto=format&fit=crop',
-        chips:['DTM','Touring']},
-      {id:4, cat:'market', mins:4, date:'2025-08-03', title:'중고차 시장, 금리 정상화 이후',
-        excerpt:'재고와 경매가가 말해주는 시그널. 살아나는 세그먼트는?',
-        img:'https://images.unsplash.com/photo-1605559424843-9e4c228bf1d1?q=80&w=1600&auto=format&fit=crop',
-        chips:['Used Car','Macro']},
-      {id:5, cat:'reviews', mins:7, date:'2025-08-01', title:'Model 3 RWD, 다시 봐도 기본기',
-        excerpt:'서스와 NVH가 다듬어지며 준중형 EV의 기준선 재정의.',
+      {id:101, cat:'jdm', mins:6, date:'2025-08-14', title:'R34 GT-R, 시대를 초월한 아이콘',
+        excerpt:'아테사 ETS와 RB26의 하모니. 전설이 된 밸런스의 원인.',
         img:'https://images.unsplash.com/photo-1619767886558-efdc259cde1e?q=80&w=1600&auto=format&fit=crop',
-        chips:['EV','Value']},
-      {id:6, cat:'tech', mins:6, date:'2025-07-28', title:'800V 아키텍처의 비용-효익',
-        excerpt:'배터리, 열관리, 인버터에서 어디까지가 스윗스팟인가.',
-        img:'https://images.unsplash.com/photo-1548359738-8f3f7e56d2e9?q=80&w=1600&auto=format&fit=crop',
-        chips:['Battery','Thermal']},
-      {id:7, cat:'motorsports', mins:3, date:'2025-07-25', title:'F1 스프린트 개편, 팬이 원하는가',
-        excerpt:'컨텍스트와 리스크가 만든 스토리텔링의 밀도.',
+        chips:['RB26','ATTESA','Icon']},
+      {id:102, cat:'bmw', mins:7, date:'2025-08-12', title:'G87 M2, 짧아진 휠베이스가 만드는 리듬',
+        excerpt:'전·후 하중 전이와 스티어 특성. 서킷에서 드러난 뉴트럴 셋업.',
+        img:'https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1600&auto=format&fit=crop',
+        chips:['RWD','S58','M']},
+      {id:103, cat:'porsche', mins:8, date:'2025-08-10', title:'911 GT3 Touring, 소음 대신 촉감',
+        excerpt:'NA의 호흡과 메카니컬 그립. 숫자보다 중요한 피드백.',
+        img:'https://images.unsplash.com/photo-1549923746-c502d488b3ea?q=80&w=1600&auto=format&fit=crop',
+        chips:['Flat-6','NA','Manual']},
+      {id:104, cat:'jdm', mins:5, date:'2025-08-08', title:'A90 Supra의 스윗스팟',
+        excerpt:'B58의 토크 플래토와 8AT 매칭. 일상과 서킷의 경계.',
+        img:'https://images.unsplash.com/photo-1605559424843-9e4c228bf1d1?q=80&w=1600&auto=format&fit=crop',
+        chips:['B58','8AT']},
+      {id:105, cat:'bmw', mins:4, date:'2025-08-06', title:'E46 M3, 시대를 만든 레퍼런스',
+        excerpt:'S54의 응답성과 섀시 강성. 지금도 통하는 세팅의 미학.',
+        img:'https://images.unsplash.com/photo-1518552718880-67b58f0b6b77?q=80&w=1600&auto=format&fit=crop',
+        chips:['S54','Reference']},
+      {id:106, cat:'porsche', mins:6, date:'2025-08-04', title:'718 Cayman GTS 4.0, 미드십의 정석',
+        excerpt:'코너 진입 속도와 탈출 라인의 자유. 밸런스가 만든 자신감.',
+        img:'https://images.unsplash.com/photo-1541348263662-e068662d82af?q=80&w=1600&auto=format&fit=crop',
+        chips:['Midship','NA']},
+      {id:107, cat:'motorsports', mins:5, date:'2025-08-02', title:'DTM의 공정성: BoP가 만드는 드라마',
+        excerpt:'밸런싱의 논쟁과 팬 경험 사이의 절충.',
         img:'https://images.unsplash.com/photo-1533139502658-0198f920d8ae?q=80&w=1600&auto=format&fit=crop',
-        chips:['F1','Sprint']},
-      {id:8, cat:'market', mins:5, date:'2025-07-20', title:'환율이 바꾼 수입차 가격 전략',
-        excerpt:'할인, 트림 구성, 로컬라이제이션의 삼각관계.',
-        img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop',
-        chips:['FX','Pricing']}
+        chips:['DTM','BoP']}
     ];
 
     // ------- RENDER -------
@@ -261,6 +279,4 @@
       links.forEach(x=>x.classList.remove('active'));
       a.classList.add('active');
     }));
-  </script>
-</body>
-</html>
+    
