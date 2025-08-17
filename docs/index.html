@@ -138,6 +138,16 @@
             <span class="pill" data-sub="F">F-Body</span>
             <span class="pill" data-sub="G">G-Body</span>
           </div>
+          <div id="seriesfilters" style="display:none;margin-top:10px;gap:8px;align-items:center">
+            <span class="pill" data-series="all">All</span>
+            <span class="pill" data-series="M1">M1</span>
+            <span class="pill" data-series="M2">M2</span>
+            <span class="pill" data-series="M3">M3</span>
+            <span class="pill" data-series="M4">M4</span>
+            <span class="pill" data-series="M5">M5</span>
+            <span class="pill" data-series="M6">M6</span>
+            <span class="pill" data-series="M7">M7</span>
+          </div>
         </div>
         <div class="card">
           <div class="thumb">
@@ -190,57 +200,68 @@
   <script>
     // ------- DATA (샘플 기사) -------
     const DATA = [
-      // --- BMW M (E/F/G) ---
-      {id:201, cat:'bmw', body:'E', model:'M3 (E46)', mins:6, date:'2025-08-14', title:'E46 M3 · 레퍼런스의 기준',
+      // ==== BMW (E/F/G × M1~M7) ====
+      // E-Body
+      {id:1001, cat:'bmw', series:'M1', body:'E', model:'M1 (E26)', mins:5, date:'2025-08-17', title:'M1 · 레이싱의 기원',
+        excerpt:'E26 파이버글라스 바디와 미드십 직렬6. BMW M의 출발점.',
+        img:'https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1600&auto=format&fit=crop', chips:['E26','Midship','Classic']},
+      {id:1002, cat:'bmw', series:'M3', body:'E', model:'M3 (E46)', mins:6, date:'2025-08-16', title:'E46 M3 · 레퍼런스의 기준',
         excerpt:'S54와 섀시 강성이 만든 시대의 표준. 지금도 통하는 셋업.',
-        img:'https://images.unsplash.com/photo-1518552718880-67b58f0b6b77?q=80&w=1600&auto=format&fit=crop',
-        chips:['E46','S54','Manual']},
-      {id:202, cat:'bmw', body:'F', model:'M5 (F10)', mins:6, date:'2025-08-12', title:'F10 M5 · 터보 시대의 균형',
-        excerpt:'S63의 토크와 차체의 안정성. 고속 크루즈의 미학.',
-        img:'https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1600&auto=format&fit=crop',
-        chips:['F10','S63','DCT']},
-      {id:203, cat:'bmw', body:'G', model:'M2 (G87)', mins:7, date:'2025-08-10', title:'G87 M2 · 짧아진 리듬',
-        excerpt:'하중 전이와 스티어 특성. 뉴트럴 셋업의 즐거움.',
-        img:'https://images.unsplash.com/photo-1621135802920-133df287f89f?q=80&w=1600&auto=format&fit=crop',
-        chips:['G87','S58','RWD']},
-      {id:204, cat:'bmw', body:'E', model:'1M Coupe (E82)', mins:5, date:'2025-08-08', title:'E82 1M · 압축된 M의 감각',
-        excerpt:'짧은 휠베이스와 즉각적인 토크. 펀-투-드라이브.',
-        img:'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1600&auto=format&fit=crop',
-        chips:['E82','N54','MT']},
-      {id:205, cat:'bmw', body:'F', model:'M4 (F82)', mins:5, date:'2025-08-06', title:'F82 M4 · 직선만이 답은 아니다',
-        excerpt:'섀시와 타이어의 매칭에서 나오는 한계의 질감.',
-        img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop',
-        chips:['F82','S55']},
-      {id:206, cat:'bmw', body:'G', model:'M5 (G90)', mins:6, date:'2025-08-04', title:'G90 M5 · 차세대 그란 투리스모',
-        excerpt:'무게, 출력, 전동화 사이 최적의 접점 찾기.',
-        img:'https://images.unsplash.com/photo-1549923746-c502d488b3ea?q=80&w=1600&auto=format&fit=crop',
-        chips:['G90','AWD']},
+        img:'https://images.unsplash.com/photo-1518552718880-67b58f0b6b77?q=80&w=1600&auto=format&fit=crop', chips:['S54','Manual']},
+      {id:1003, cat:'bmw', series:'M5', body:'E', model:'M5 (E39)', mins:6, date:'2025-08-15', title:'E39 M5 · V8의 균형감',
+        excerpt:'자연흡기 V8과 샤시 밸런스. 그란 투리스모의 정석.',
+        img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop', chips:['V8','NA']},
+      {id:1004, cat:'bmw', series:'M6', body:'E', model:'M6 (E63)', mins:5, date:'2025-08-14', title:'E63 M6 · 하이레브 V10의 서사',
+        excerpt:'S85 V10과 GT 섀시의 공존. 사운드와 스루풋.',
+        img:'https://images.unsplash.com/photo-1549923746-c502d488b3ea?q=80&w=1600&auto=format&fit=crop', chips:['S85','GT']},
 
-      // --- Porsche (세대 구분 예시) ---
-      {id:301, cat:'porsche', gen:'997', model:'911 GT3 (997)', mins:7, date:'2025-08-03', title:'997 GT3 · 원형의 직결감',
-        excerpt:'NA와 경량화의 조합. 직설적인 피드백.',
-        img:'https://images.unsplash.com/photo-1541348263662-e068662d82af?q=80&w=1600&auto=format&fit=crop',
-        chips:['997','NA','Manual']},
-      {id:302, cat:'porsche', gen:'991', model:'911 Carrera (991)', mins:6, date:'2025-08-02', title:'991 Carrera · 일상과 스포츠의 경계',
-        excerpt:'PDK와 전자 제어의 완성도.',
-        img:'https://images.unsplash.com/photo-1605559424843-9e4c228bf1d1?q=80&w=1600&auto=format&fit=crop',
-        chips:['991','PDK']},
-      {id:303, cat:'porsche', gen:'992', model:'911 GT3 Touring (992)', mins:8, date:'2025-08-01', title:'992 GT3 Touring · 소음 대신 촉감',
+      // F-Body
+      {id:1011, cat:'bmw', series:'M2', body:'F', model:'M2 (F87)', mins:5, date:'2025-08-13', title:'F87 M2 · 컴팩트의 무게중심',
+        excerpt:'짧은 휠베이스와 리어-드리븐. 펀-투-드라이브 기준점.',
+        img:'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1600&auto=format&fit=crop', chips:['F87','RWD']},
+      {id:1012, cat:'bmw', series:'M3', body:'F', model:'M3 (F80)', mins:6, date:'2025-08-12', title:'F80 M3 · 터보의 세팅',
+        excerpt:'S55의 응답과 섀시 보정. 직선과 코너의 균형값.',
+        img:'https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1600&auto=format&fit=crop', chips:['S55','Turbo']},
+      {id:1013, cat:'bmw', series:'M4', body:'F', model:'M4 (F82)', mins:5, date:'2025-08-11', title:'F82 M4 · 직선만이 답은 아니다',
+        excerpt:'그립과 바디 컨트롤에서 오는 제한의 질감.',
+        img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop', chips:['F82']},
+      {id:1014, cat:'bmw', series:'M5', body:'F', model:'M5 (F10)', mins:6, date:'2025-08-10', title:'F10 M5 · 고속의 품격',
+        excerpt:'S63과 하체 세팅의 조화. 장거리의 유연성.',
+        img:'https://images.unsplash.com/photo-1549923746-c502d488b3ea?q=80&w=1600&auto=format&fit=crop', chips:['S63','DCT']},
+      {id:1015, cat:'bmw', series:'M6', body:'F', model:'M6 (F13)', mins:5, date:'2025-08-09', title:'F13 M6 · GT의 여백',
+        excerpt:'쿠페의 롱 휠베이스와 트윈터보의 매칭.',
+        img:'https://images.unsplash.com/photo-1541348263662-e068662d82af?q=80&w=1600&auto=format&fit=crop', chips:['F13']},
+      {id:1016, cat:'bmw', series:'M7', body:'F', model:'M7 (F01 기반 760Li 레퍼런스)', mins:4, date:'2025-08-08', title:'M7? · 플래그십의 가능성',
+        excerpt:'공식 M은 없지만, 대형 세단에 담긴 성향을 읽다.',
+        img:'https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1600&auto=format&fit=crop', chips:['Flagship']},
+
+      // G-Body
+      {id:1021, cat:'bmw', series:'M2', body:'G', model:'M2 (G87)', mins:6, date:'2025-08-07', title:'G87 M2 · 리듬의 재정의',
+        excerpt:'뉴트럴한 리어와 초기 응답. 드라이버 입력의 투명성.',
+        img:'https://images.unsplash.com/photo-1621135802920-133df287f89f?q=80&w=1600&auto=format&fit=crop', chips:['G87','S58']},
+      {id:1022, cat:'bmw', series:'M3', body:'G', model:'M3 (G80)', mins:6, date:'2025-08-06', title:'G80 M3 · 하이브리드 시대의 지점',
+        excerpt:'섀시 강성과 전자제어. 일상성과 서킷의 경계.',
+        img:'https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1600&auto=format&fit=crop', chips:['G80']},
+      {id:1023, cat:'bmw', series:'M4', body:'G', model:'M4 (G82)', mins:5, date:'2025-08-05', title:'G82 M4 · 다운포스의 읽기',
+        excerpt:'프런트 엔드와 리어 트랙의 대화.',
+        img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop', chips:['G82']},
+      {id:1024, cat:'bmw', series:'M5', body:'G', model:'M5 (G90)', mins:6, date:'2025-08-04', title:'G90 M5 · 차세대 GT',
+        excerpt:'출력, 무게, 전동화 사이 밸런스 포인트.',
+        img:'https://images.unsplash.com/photo-1549923746-c502d488b3ea?q=80&w=1600&auto=format&fit=crop', chips:['G90']},
+      {id:1025, cat:'bmw', series:'M7', body:'G', model:'M760i (G12) · 플래그십', mins:4, date:'2025-08-03', title:'G12 M760i · 대형의 속도',
+        excerpt:'사운드와 정숙성의 양면. 장거리에서 드러나는 여유.',
+        img:'https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1600&auto=format&fit=crop', chips:['V12','xDrive']},
+
+      // ---- 기존 카테고리 일부 유지 (톤 맞춤) ----
+      {id:1101, cat:'porsche', gen:'992', model:'911 GT3 Touring (992)', mins:8, date:'2025-08-01', title:'992 GT3 Touring · 촉감의 스포츠',
         excerpt:'플랫식스의 호흡과 미드-하이 그립.',
-        img:'https://images.unsplash.com/photo-1549923746-c502d488b3ea?q=80&w=1600&auto=format&fit=crop',
-        chips:['992','NA']},
-
-      // --- AMG ---
-      {id:401, cat:'amg', model:'C63 S', mins:5, date:'2025-07-30', title:'C63 S · 사운드의 기억',
+        img:'https://images.unsplash.com/photo-1549923746-c502d488b3ea?q=80&w=1600&auto=format&fit=crop', chips:['992','NA']},
+      {id:1201, cat:'amg', model:'C63 S', mins:5, date:'2025-07-30', title:'C63 S · 사운드의 기억',
         excerpt:'과거와 현재 파워트레인의 간극.',
-        img:'https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1600&auto=format&fit=crop',
-        chips:['AMG','RWD']},
-
-      // --- Ferrari ---
-      {id:501, cat:'ferrari', model:'488 GTB', mins:6, date:'2025-07-28', title:'488 GTB · 공기와의 대화',
+        img:'https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1600&auto=format&fit=crop', chips:['AMG','RWD']},
+      {id:1301, cat:'ferrari', model:'488 GTB', mins:6, date:'2025-07-28', title:'488 GTB · 공기와의 대화',
         excerpt:'다운포스와 일상성의 교차점.',
-        img:'https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?q=80&w=1600&auto=format&fit=crop',
-        chips:['Turbo','Midship']}
+        img:'https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?q=80&w=1600&auto=format&fit=crop', chips:['Turbo','Midship']}
     ];
 
     // ------- RENDER -------
@@ -275,38 +296,58 @@
     // ------- FILTERS & SEARCH -------
     let current = 'all';
     let subBody = 'all'; // BMW 전용 보조 필터 (E/F/G)
-    const $pills = document.querySelectorAll('.pill');
+    let subSeries = 'all'; // BMW 전용 시리즈 필터 (M1~M7) // BMW 전용 보조 필터 (E/F/G)
+    const $pills = document.querySelectorAll('.pill[data-filter]'); // 메인 필터만 바인딩
     const $search = document.getElementById('search');
 
     function apply(){
       const q = ($search.value||'').toLowerCase();
+      if(!current) current = 'all';
       let list = DATA.filter(a => (current==='all' || a.cat===current) &&
         (a.title.toLowerCase().includes(q) || (a.excerpt||'').toLowerCase().includes(q) || (a.chips||[]).join(' ').toLowerCase().includes(q))
       );
-      if(current==='bmw' && subBody!=='all'){
-        list = list.filter(a=> (a.body||'') === subBody);
+      if(current==='bmw'){
+        if(subBody!=='all') list = list.filter(a=> (a.body||'') === subBody);
+        if(subSeries!=='all') list = list.filter(a=> (a.series||'') === subSeries);
       }
       render(list);
     }
 
     $pills.forEach(p=>p.addEventListener('click',()=>{
+      // 메인 필터 클릭 처리 (JDM/BMW/Porsche/AMG/Ferrari/Motorsports/전체)
       $pills.forEach(x=>x.classList.remove('active'));
       p.classList.add('active');
-      current = p.dataset.filter;
+      current = p.dataset.filter || 'all';
       // 서브필터 가시성 제어 (BMW만)
       const $sub = document.getElementById('subfilters');
-      if(current==='bmw'){ $sub.style.display='flex'; } else { $sub.style.display='none'; subBody='all'; }
-      apply();
-    }));
-
-    // 서브필터 바인딩 (E/F/G)
-    const $sub = document.getElementById('subfilters');
     $sub.addEventListener('click',(e)=>{
       const t = e.target.closest('.pill');
       if(!t) return;
       $sub.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));
       t.classList.add('active');
-      subBody = t.dataset.sub; // all | E | F | G
+      subBody = t.dataset.sub || 'all';
+      if(current!=='bmw'){
+        current='bmw';
+        document.querySelectorAll('.pill[data-filter]').forEach(x=>x.classList.toggle('active', x.dataset.filter==='bmw'));
+        document.getElementById('subfilters').style.display='flex';
+        document.getElementById('seriesfilters').style.display='flex';
+      }
+      apply();
+    });
+
+    const $series = document.getElementById('seriesfilters');
+    $series.addEventListener('click',(e)=>{
+      const t = e.target.closest('.pill');
+      if(!t) return;
+      $series.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      subSeries = t.dataset.series || 'all';
+      if(current!=='bmw'){
+        current='bmw';
+        document.querySelectorAll('.pill[data-filter]').forEach(x=>x.classList.toggle('active', x.dataset.filter==='bmw'));
+        document.getElementById('subfilters').style.display='flex';
+        document.getElementById('seriesfilters').style.display='flex';
+      }
       apply();
     });
       p.classList.add('active');
@@ -347,3 +388,4 @@
       a.classList.add('active');
     }));
     
+
