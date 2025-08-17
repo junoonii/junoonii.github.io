@@ -7,7 +7,7 @@
   <meta name="description" content="감도 있는 자동차 매거진 랜딩. 리뷰, 기술, 모터스포츠, 시장 트렌드까지." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* THEME — HIGH-END / RACING (All Black) */
     :root{
@@ -25,7 +25,7 @@
     *{box-sizing:border-box}
     html,body{height:100%}
     body{margin:0; background:var(--bg); color:var(--ink);
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,Malgun Gothic,sans-serif; line-height:1.6}
+      font-family:'Space Grotesk',system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,Malgun Gothic,sans-serif; line-height:1.6}
     h1,h2,h3{font-family:"Archivo Black",system-ui,sans-serif; letter-spacing:.2px}
     a{color:inherit;text-decoration:none}
     img{display:block;max-width:100%;height:auto;border-radius:12px}
@@ -123,11 +123,20 @@
             <div class="pill" data-filter="jdm">JDM</div>
             <div class="pill" data-filter="bmw">BMW</div>
             <div class="pill" data-filter="porsche">Porsche</div>
+            <div class="pill" data-filter="amg">AMG</div>
+            <div class="pill" data-filter="ferrari">Ferrari</div>
             <div class="pill" data-filter="motorsports">Motorsports</div>
             <label class="search" aria-label="검색">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-3.5-3.5" stroke="#93a0b8" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="7" stroke="#93a0b8" stroke-width="2"/></svg>
               <input id="search" type="text" placeholder="모델, 브랜드, 키워드 검색" />
             </label>
+          </div>
+          <!-- Subfilters (BMW 전용) -->
+          <div id="subfilters" style="display:none;margin-top:10px;gap:8px;align-items:center">
+            <span class="pill" data-sub="all">All</span>
+            <span class="pill" data-sub="E">E-Body</span>
+            <span class="pill" data-sub="F">F-Body</span>
+            <span class="pill" data-sub="G">G-Body</span>
           </div>
         </div>
         <div class="card">
@@ -181,34 +190,57 @@
   <script>
     // ------- DATA (샘플 기사) -------
     const DATA = [
-      {id:101, cat:'jdm', mins:6, date:'2025-08-14', title:'R34 GT-R, 시대를 초월한 아이콘',
-        excerpt:'아테사 ETS와 RB26의 하모니. 전설이 된 밸런스의 원인.',
-        img:'https://images.unsplash.com/photo-1619767886558-efdc259cde1e?q=80&w=1600&auto=format&fit=crop',
-        chips:['RB26','ATTESA','Icon']},
-      {id:102, cat:'bmw', mins:7, date:'2025-08-12', title:'G87 M2, 짧아진 휠베이스가 만드는 리듬',
-        excerpt:'전·후 하중 전이와 스티어 특성. 서킷에서 드러난 뉴트럴 셋업.',
-        img:'https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1600&auto=format&fit=crop',
-        chips:['RWD','S58','M']},
-      {id:103, cat:'porsche', mins:8, date:'2025-08-10', title:'911 GT3 Touring, 소음 대신 촉감',
-        excerpt:'NA의 호흡과 메카니컬 그립. 숫자보다 중요한 피드백.',
-        img:'https://images.unsplash.com/photo-1549923746-c502d488b3ea?q=80&w=1600&auto=format&fit=crop',
-        chips:['Flat-6','NA','Manual']},
-      {id:104, cat:'jdm', mins:5, date:'2025-08-08', title:'A90 Supra의 스윗스팟',
-        excerpt:'B58의 토크 플래토와 8AT 매칭. 일상과 서킷의 경계.',
-        img:'https://images.unsplash.com/photo-1605559424843-9e4c228bf1d1?q=80&w=1600&auto=format&fit=crop',
-        chips:['B58','8AT']},
-      {id:105, cat:'bmw', mins:4, date:'2025-08-06', title:'E46 M3, 시대를 만든 레퍼런스',
-        excerpt:'S54의 응답성과 섀시 강성. 지금도 통하는 세팅의 미학.',
+      // --- BMW M (E/F/G) ---
+      {id:201, cat:'bmw', body:'E', model:'M3 (E46)', mins:6, date:'2025-08-14', title:'E46 M3 · 레퍼런스의 기준',
+        excerpt:'S54와 섀시 강성이 만든 시대의 표준. 지금도 통하는 셋업.',
         img:'https://images.unsplash.com/photo-1518552718880-67b58f0b6b77?q=80&w=1600&auto=format&fit=crop',
-        chips:['S54','Reference']},
-      {id:106, cat:'porsche', mins:6, date:'2025-08-04', title:'718 Cayman GTS 4.0, 미드십의 정석',
-        excerpt:'코너 진입 속도와 탈출 라인의 자유. 밸런스가 만든 자신감.',
+        chips:['E46','S54','Manual']},
+      {id:202, cat:'bmw', body:'F', model:'M5 (F10)', mins:6, date:'2025-08-12', title:'F10 M5 · 터보 시대의 균형',
+        excerpt:'S63의 토크와 차체의 안정성. 고속 크루즈의 미학.',
+        img:'https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1600&auto=format&fit=crop',
+        chips:['F10','S63','DCT']},
+      {id:203, cat:'bmw', body:'G', model:'M2 (G87)', mins:7, date:'2025-08-10', title:'G87 M2 · 짧아진 리듬',
+        excerpt:'하중 전이와 스티어 특성. 뉴트럴 셋업의 즐거움.',
+        img:'https://images.unsplash.com/photo-1621135802920-133df287f89f?q=80&w=1600&auto=format&fit=crop',
+        chips:['G87','S58','RWD']},
+      {id:204, cat:'bmw', body:'E', model:'1M Coupe (E82)', mins:5, date:'2025-08-08', title:'E82 1M · 압축된 M의 감각',
+        excerpt:'짧은 휠베이스와 즉각적인 토크. 펀-투-드라이브.',
+        img:'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1600&auto=format&fit=crop',
+        chips:['E82','N54','MT']},
+      {id:205, cat:'bmw', body:'F', model:'M4 (F82)', mins:5, date:'2025-08-06', title:'F82 M4 · 직선만이 답은 아니다',
+        excerpt:'섀시와 타이어의 매칭에서 나오는 한계의 질감.',
+        img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop',
+        chips:['F82','S55']},
+      {id:206, cat:'bmw', body:'G', model:'M5 (G90)', mins:6, date:'2025-08-04', title:'G90 M5 · 차세대 그란 투리스모',
+        excerpt:'무게, 출력, 전동화 사이 최적의 접점 찾기.',
+        img:'https://images.unsplash.com/photo-1549923746-c502d488b3ea?q=80&w=1600&auto=format&fit=crop',
+        chips:['G90','AWD']},
+
+      // --- Porsche (세대 구분 예시) ---
+      {id:301, cat:'porsche', gen:'997', model:'911 GT3 (997)', mins:7, date:'2025-08-03', title:'997 GT3 · 원형의 직결감',
+        excerpt:'NA와 경량화의 조합. 직설적인 피드백.',
         img:'https://images.unsplash.com/photo-1541348263662-e068662d82af?q=80&w=1600&auto=format&fit=crop',
-        chips:['Midship','NA']},
-      {id:107, cat:'motorsports', mins:5, date:'2025-08-02', title:'DTM의 공정성: BoP가 만드는 드라마',
-        excerpt:'밸런싱의 논쟁과 팬 경험 사이의 절충.',
-        img:'https://images.unsplash.com/photo-1533139502658-0198f920d8ae?q=80&w=1600&auto=format&fit=crop',
-        chips:['DTM','BoP']}
+        chips:['997','NA','Manual']},
+      {id:302, cat:'porsche', gen:'991', model:'911 Carrera (991)', mins:6, date:'2025-08-02', title:'991 Carrera · 일상과 스포츠의 경계',
+        excerpt:'PDK와 전자 제어의 완성도.',
+        img:'https://images.unsplash.com/photo-1605559424843-9e4c228bf1d1?q=80&w=1600&auto=format&fit=crop',
+        chips:['991','PDK']},
+      {id:303, cat:'porsche', gen:'992', model:'911 GT3 Touring (992)', mins:8, date:'2025-08-01', title:'992 GT3 Touring · 소음 대신 촉감',
+        excerpt:'플랫식스의 호흡과 미드-하이 그립.',
+        img:'https://images.unsplash.com/photo-1549923746-c502d488b3ea?q=80&w=1600&auto=format&fit=crop',
+        chips:['992','NA']},
+
+      // --- AMG ---
+      {id:401, cat:'amg', model:'C63 S', mins:5, date:'2025-07-30', title:'C63 S · 사운드의 기억',
+        excerpt:'과거와 현재 파워트레인의 간극.',
+        img:'https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1600&auto=format&fit=crop',
+        chips:['AMG','RWD']},
+
+      // --- Ferrari ---
+      {id:501, cat:'ferrari', model:'488 GTB', mins:6, date:'2025-07-28', title:'488 GTB · 공기와의 대화',
+        excerpt:'다운포스와 일상성의 교차점.',
+        img:'https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?q=80&w=1600&auto=format&fit=crop',
+        chips:['Turbo','Midship']}
     ];
 
     // ------- RENDER -------
@@ -217,17 +249,21 @@
 
     function render(list){
       $grid.innerHTML = '';
+      const catToFlag = { jdm:'🇯🇵', bmw:'🇩🇪', porsche:'🇩🇪', motorsports:'🏁', amg:'🇩🇪', ferrari:'🇮🇹' };
       list.forEach((a)=>{
         const el = document.createElement('article');
         el.className = 'card span-6';
         el.setAttribute('data-cat', a.cat);
+        const badge = catToFlag[a.cat] || '';
+        const model = a.model ? `<div class="meta" style="margin-top:4px">${a.model}${a.body?` · ${a.body}`:''}${a.gen?` · ${a.gen}`:''}</div>` : '';
         el.innerHTML = `
-          <div class="thumb"><img src="${a.img}" alt="${a.title}" loading="lazy"><div class="shadow"></div><span class="tag">${a.cat}</span></div>
+          <div class="thumb"><img src="${a.img}" alt="${a.title}" loading="lazy" style="filter:grayscale(20%)"><div class="shadow"></div><span class="tag">${a.cat}</span></div>
           <div class="card-body">
             <div class="meta">${fmtDate(a.date)} · ${a.mins} min</div>
-            <div class="title">${a.title}</div>
+            <div class="title">${a.title} ${badge?`<span style='font-size:14px;opacity:.8'>${badge}</span>`:''}</div>
+            ${model}
             <p class="excerpt">${a.excerpt}</p>
-            <div class="chips">${a.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div>
+            <div class="chips">${a.chips?a.chips.map(c=>`<span class=\"chip\">${c}</span>`).join(''):''}</div>
           </div>`;
         $grid.appendChild(el);
       });
@@ -238,19 +274,41 @@
 
     // ------- FILTERS & SEARCH -------
     let current = 'all';
+    let subBody = 'all'; // BMW 전용 보조 필터 (E/F/G)
     const $pills = document.querySelectorAll('.pill');
     const $search = document.getElementById('search');
 
     function apply(){
       const q = ($search.value||'').toLowerCase();
-      const list = DATA.filter(a => (current==='all' || a.cat===current) &&
-        (a.title.toLowerCase().includes(q) || a.excerpt.toLowerCase().includes(q) || a.chips.join(' ').toLowerCase().includes(q))
+      let list = DATA.filter(a => (current==='all' || a.cat===current) &&
+        (a.title.toLowerCase().includes(q) || (a.excerpt||'').toLowerCase().includes(q) || (a.chips||[]).join(' ').toLowerCase().includes(q))
       );
+      if(current==='bmw' && subBody!=='all'){
+        list = list.filter(a=> (a.body||'') === subBody);
+      }
       render(list);
     }
 
     $pills.forEach(p=>p.addEventListener('click',()=>{
       $pills.forEach(x=>x.classList.remove('active'));
+      p.classList.add('active');
+      current = p.dataset.filter;
+      // 서브필터 가시성 제어 (BMW만)
+      const $sub = document.getElementById('subfilters');
+      if(current==='bmw'){ $sub.style.display='flex'; } else { $sub.style.display='none'; subBody='all'; }
+      apply();
+    }));
+
+    // 서브필터 바인딩 (E/F/G)
+    const $sub = document.getElementById('subfilters');
+    $sub.addEventListener('click',(e)=>{
+      const t = e.target.closest('.pill');
+      if(!t) return;
+      $sub.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      subBody = t.dataset.sub; // all | E | F | G
+      apply();
+    });
       p.classList.add('active');
       current = p.dataset.filter;
       apply();
@@ -269,6 +327,17 @@
       }
       alert('구독 신청이 접수되었습니다. (데모)');
       document.getElementById('email').value='';
+    });
+
+    // 키보드 단축키: J=JDM, B=BMW, P=Porsche, M=Motorsports, A=All
+    document.addEventListener('keydown', (e)=>{
+      const key = e.key.toLowerCase();
+      const map = { j:'jdm', b:'bmw', p:'porsche', m:'motorsports', a:'all' };
+      if(map[key]){
+        current = map[key];
+        $pills.forEach(x=>x.classList.toggle('active', x.dataset.filter===current));
+        apply();
+      }
     });
 
     // 메뉴 active 처리(간단)
