@@ -105,6 +105,85 @@
     /* Footer */
     footer{margin-top:40px;border-top:1px solid var(--line);padding:32px 0;color:var(--muted)}
     .foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+    /* ===== MOBILE (<= 768px) ===== */
+    @media (max-width: 768px) {
+      .container { padding: 0 16px; }
+
+      /* 헤더/메뉴 컴팩트 */
+      .nav { height: 64px; gap: 8px; }
+      .menu { display: none; } /* 공간 확보 — 필요하면 보이게 바꿀 수 있음 */
+
+      /* 히어로 1열 + 폰트 스케일 다운 */
+      .hero { padding: 32px 0; }
+      .hero-grid { grid-template-columns: 1fr; gap: 14px; }
+      .hero .thumb { aspect-ratio: 16 / 9; }
+      h1.display { font-size: clamp(26px, 7vw, 36px); }
+      .lead { font-size: 14px; color: #d4d4d4; }
+
+      /* 필터: 가로 스크롤 + 더 큰 터치타깃 */
+      .controls {
+        position: sticky; top: 64px;
+        gap: 8px; padding: 8px 10px; border-radius: 10px;
+        overflow-x: auto; -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .controls::-webkit-scrollbar { display: none; }
+      .pill { padding: 8px 12px; font-size: 13px; white-space: nowrap; }
+
+      /* 서브필터도 스크롤 */
+      #subfilters, #seriesfilters {
+        gap: 8px; padding: 6px 0;
+        overflow-x: auto; -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      #subfilters::-webkit-scrollbar, #seriesfilters::-webkit-scrollbar { display: none; }
+      #subfilters .pill, #seriesfilters .pill { white-space: nowrap; }
+
+      /* 검색 입력 */
+      .search { min-width: 0; flex: 1; }
+      .search input { font-size: 14px; }
+
+      /* 그리드 1열 */
+      .grid { grid-template-columns: 1fr; gap: 12px; }
+      .card { grid-column: span 12; border-radius: 14px; }
+      .card.span-6, .card.span-4 { grid-column: span 12; }
+
+      /* 썸네일 안정화 */
+      .thumb { aspect-ratio: 16 / 9; }
+      .thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+      }
+      .card-body { padding: 14px; }
+      .title { font-size: 18px; }
+      .meta { font-size: 12px; }
+      .excerpt { font-size: 14px; }
+
+      /* CTA 섹션 */
+      #subscribe .card { padding: 16px; gap: 12px; }
+      #subscribe .title { font-size: 18px !important; }
+      #subscribe .excerpt { font-size: 14px; }
+      #form { width: 100%; }
+      #email { min-width: 0 !important; width: 100%; }
+      #subscribeBtn { width: 100%; }
+
+      /* 푸터 정렬 */
+      .foot { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }
+
+    /* ===== SMALL MOBILE (<= 360px) ===== */
+    @media (max-width: 360px) {
+      .pill { padding: 7px 10px; font-size: 12px; }
+      .title { font-size: 17px; }
+    }
+
+    /* 모션 줄이기 설정시 과한 트랜지션 제거 */
+    @media (prefers-reduced-motion: reduce) {
+      .thumb img, .card { transition: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -365,6 +444,10 @@
         subBody='all'; subSeries='all';
         $sub.querySelectorAll('.pill').forEach(x=>x.classList.toggle('active', x.dataset.sub==='all'));
         $series.querySelectorAll('.pill').forEach(x=>x.classList.toggle('active', x.dataset.series==='all'));
+
+        // 모바일 UX: 서브필터 스크롤 초기화
+        $sub.scrollLeft = 0;
+        $series.scrollLeft = 0;
       } else {
         $sub.style.display='none';
         $series.style.display='none';
@@ -427,7 +510,7 @@
       a.classList.add('active');
     }));
 
-    // ⛔ 키보드 단축키 제거됨
+    // ⛔ 키보드 단축키 없음
   </script>
 </body>
 </html>
