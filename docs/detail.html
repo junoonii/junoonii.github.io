@@ -1,99 +1,106 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SHIFT — Detail</title>
-  <meta name="description" content="SHIFT — Car Culture Magazine: 상세 기사" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BMW 상세 페이지</title>
   <style>
-    :root{
-      --bg:#0a0a0a; --panel:#0e0e0e; --ink:#f5f5f5; --muted:#a3a3a3; --line:#1a1a1a;
-      --accent:#0ea5e9; --shadow:0 10px 40px rgba(0,0,0,.55);
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      line-height: 1.6;
+      padding: 20px;
     }
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--ink);
-      font-family:'Space Grotesk',system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,Malgun Gothic,sans-serif}
-    a{color:inherit;text-decoration:none}
-    header{position:sticky;top:0;z-index:10;border-bottom:1px solid var(--line);background:rgba(10,10,10,.8);backdrop-filter:blur(8px)}
-    .nav{max-width:980px;margin:0 auto;padding:14px 20px;display:flex;gap:12px;align-items:center;justify-content:space-between}
-    .btn{padding:8px 12px;border:1px solid #262626;border-radius:10px}
-    main{max-width:980px;margin:0 auto;padding:20px}
-    .hero{display:grid;grid-template-columns:1fr;gap:16px}
-    .thumb{aspect-ratio:16/9}
-    .thumb img{width:100%;height:100%;object-fit:cover;border-radius:14px}
-    .meta{color:var(--muted);font-size:14px;margin:6px 0}
-    h1{font-family:"Archivo Black",system-ui,sans-serif;font-size:clamp(28px,5vw,44px);margin:6px 0 8px}
-    .content{margin-top:16px;line-height:1.75;color:#e5e5e5}
-    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-    .chip{font-size:12px;border:1px solid var(--line);padding:4px 10px;border-radius:999px;background:#141414}
-    .back{display:inline-flex;align-items:center;gap:8px;margin-bottom:12px}
-    footer{max-width:980px;margin:30px auto 40px;color:#9ca3af}
+    header {
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 1px solid #333;
+    }
+    h1 {
+      font-size: 28px;
+      margin: 0;
+      color: #4da3ff;
+    }
+    .content {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #111;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    }
+    h2 {
+      margin-top: 30px;
+      color: #ffd700;
+    }
+    p {
+      margin: 12px 0;
+    }
+    a.back {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 16px;
+      background: #4da3ff;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    a.back:hover {
+      background: #1a73e8;
+    }
   </style>
 </head>
 <body>
   <header>
-    <div class="nav">
-      <a class="back" href="./"><span>←</span> <span>뒤로가기</span></a>
-      <a class="btn" href="./#subscribe">구독</a>
-    </div>
+    <h1 id="title">BMW 상세 페이지</h1>
   </header>
 
-  <main id="app">Loading…</main>
+  <div class="content" id="content">
+    <!-- 여기 내용이 자바스크립트로 채워짐 -->
+  </div>
 
-  <footer>
-    © <span id="year"></span> SHIFT. Built with ❤️ & GPT-5.
-  </footer>
+  <div style="text-align:center;">
+    <a href="index.html" class="back">← 메인으로 돌아가기</a>
+  </div>
 
   <script>
-    // 간단 동작용 — index의 데이터 중 일부만 포함 (원하면 data.js로 분리 가능)
-    const DATA = [
-      {id:0,   cat:'editorial', title:'검은 차체, 붉은 포인트: THE BEAST', date:'2025-08-17', mins:5,
-       img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1400&auto=format&fit=crop',
-       excerpt:'모노크롬 표면 위의 미세한 질감, 정밀한 스티어링, 그리고 완성도.',
-       chips:['Editorial','Monochrome'],
-       bodyHtml:`<p>올 블랙 톤에서 읽히는 표면의 미세한 질감과 조향의 직결감을 모티프로,
-       불필요한 요소를 비워내고 본질만 남긴 에디토리얼입니다.</p>`},
+    // URL에서 id 값 가져오기
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
 
-      {id:1002, cat:'bmw', title:'E46 M3 · 레퍼런스의 기준', date:'2025-08-16', mins:6,
-       img:'https://i.pinimg.com/736x/a2/96/3e/a2963eee6cb84160211912a6ded28f13.jpg',
-       excerpt:'S54와 섀시 강성이 만든 시대의 표준.',
-       chips:['S54','Manual'],
-       bodyHtml:`<p>E46 M3는 자연흡기의 응답성과 밸런스가 돋보이며,
-       오늘날에도 참고 기준이 되는 셋업을 보여줍니다.</p>`},
-    ];
+    // 상세 콘텐츠 정의
+    const CONTENTS = {
+      "e-body": `
+        <h2>BMW E-Body 시대</h2>
+        <p>BMW의 <strong>E-바디</strong> 시리즈는 1960년대 말부터 2000년대 초까지 사용된 코드네임 체계입니다.</p>
+        <p>예: E30 (3시리즈), E34 (5시리즈), E38 (7시리즈) 등</p>
+        <p>클래식 감성과 기계적인 주행 재미를 중시하던 시절로, 매니아들 사이에서 '아날로그 BMW'의 정수로 평가됩니다.</p>
+      `,
+      "f-body": `
+        <h2>BMW F-Body 시대</h2>
+        <p>2008년 이후 BMW는 <strong>F-바디</strong> 체계로 전환했습니다.</p>
+        <p>예: F10 (5시리즈), F30 (3시리즈), F12 (6시리즈 컨버터블) 등</p>
+        <p>디자인과 전자장비가 크게 발전한 시기였고, 드라이빙 어시스턴트와 터보 엔진이 본격적으로 도입되었습니다.</p>
+      `,
+      "g-body": `
+        <h2>BMW G-Body 시대</h2>
+        <p><strong>G-바디</strong>는 2015년 이후 최신 BMW에 적용되는 코드네임입니다.</p>
+        <p>예: G20 (3시리즈), G30 (5시리즈), G70 (7시리즈) 등</p>
+        <p>플랫폼 효율화와 함께, 첨단 운전자 보조 시스템(ADAS)과 전동화(EV, 하이브리드)로의 전환이 가속화되었습니다.</p>
+      `
+    };
 
-    const fmtDate = s => new Date(s).toLocaleDateString('ko-KR', {year:'numeric',month:'2-digit',day:'2-digit'});
-    const qs = new URLSearchParams(location.search);
-    const id = Number(qs.get('id'));
-    const art = DATA.find(a => a.id === id);
-
-    const $app = document.getElementById('app');
-    if(!art){
-      $app.innerHTML = `
-        <article class="hero">
-          <h1>아직 준비 중인 기사예요.</h1>
-          <p class="content">선택한 ID(<code>${id}</code>)에 해당하는 상세가 없습니다. 곧 채울게요!</p>
-          <p><a href="./">← 목록으로 돌아가기</a></p>
-        </article>`;
+    // 제목 + 내용 채우기
+    const contentDiv = document.getElementById("content");
+    if (id && CONTENTS[id]) {
+      document.getElementById("title").innerText = `BMW ${id.toUpperCase()} 상세`;
+      contentDiv.innerHTML = CONTENTS[id];
     } else {
-      $app.innerHTML = `
-        <article class="hero">
-          <div class="text">
-            <div class="meta">${fmtDate(art.date)} · ${art.mins} min · ${art.cat}</div>
-            <h1>${art.title}</h1>
-            <div class="chips">${(art.chips||[]).map(c=>`<span class="chip">${c}</span>`).join('')}</div>
-          </div>
-          <div class="thumb"><img src="${art.img}" alt="${art.title}"></div>
-          <div class="content">
-            <p class="excerpt">${art.excerpt||''}</p>
-            ${art.bodyHtml||''}
-          </div>
-        </article>`;
+      contentDiv.innerHTML = "<p>잘못된 접근입니다. 메인 페이지에서 차량을 선택해주세요.</p>";
     }
-
-    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
