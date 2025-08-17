@@ -318,6 +318,26 @@
       $pills.forEach(x=>x.classList.remove('active'));
       p.classList.add('active');
       current = p.dataset.filter || 'all';
+
+      // 서브필터 가시성 제어 (BMW만)
+      const $sub = document.getElementById('subfilters');
+      const $series = document.getElementById('seriesfilters');
+      if(current==='bmw'){
+        $sub.style.display='flex';
+        $series.style.display='flex';
+        // 초기화 (All 활성화)
+        subBody='all'; subSeries='all';
+        $sub.querySelectorAll('.pill').forEach(x=>x.classList.toggle('active', x.dataset.sub==='all'));
+        $series.querySelectorAll('.pill').forEach(x=>x.classList.toggle('active', x.dataset.series==='all'));
+      } else {
+        $sub.style.display='none';
+        $series.style.display='none';
+        subBody='all'; subSeries='all';
+      }
+      apply();
+    }));
+      p.classList.add('active');
+      current = p.dataset.filter || 'all';
       // 서브필터 가시성 제어 (BMW만)
       const $sub = document.getElementById('subfilters');
     $sub.addEventListener('click',(e)=>{
@@ -355,8 +375,43 @@
       apply();
     }));
 
+    // --- BMW 서브필터 이벤트 (E/F/G)
+    const $sub = document.getElementById('subfilters');
+    $sub.addEventListener('click',(e)=>{
+      const t = e.target.closest('.pill');
+      if(!t) return;
+      $sub.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      subBody = t.dataset.sub || 'all';
+      if(current!=='bmw'){
+        current='bmw';
+        document.querySelectorAll('.pill[data-filter]').forEach(x=>x.classList.toggle('active', x.dataset.filter==='bmw'));
+        document.getElementById('subfilters').style.display='flex';
+        document.getElementById('seriesfilters').style.display='flex';
+      }
+      apply();
+    });
+
+    // --- BMW 시리즈 필터 이벤트 (M1~M7)
+    const $series = document.getElementById('seriesfilters');
+    $series.addEventListener('click',(e)=>{
+      const t = e.target.closest('.pill');
+      if(!t) return;
+      $series.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      subSeries = t.dataset.series || 'all';
+      if(current!=='bmw'){
+        current='bmw';
+        document.querySelectorAll('.pill[data-filter]').forEach(x=>x.classList.toggle('active', x.dataset.filter==='bmw'));
+        document.getElementById('subfilters').style.display='flex';
+        document.getElementById('seriesfilters').style.display='flex';
+      }
+      apply();
+    });
+
     $search.addEventListener('input',()=>{
       apply();
+    });
     });
 
     // ------- UX -------
@@ -388,4 +443,3 @@
       a.classList.add('active');
     }));
     
-
